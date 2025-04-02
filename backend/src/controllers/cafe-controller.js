@@ -2,22 +2,12 @@ import {getDistance, calculateAverage} from "../utils/utils.js";
 
 
 const cafeTags = require('../data/cafeTags.json')
-const cafes = [  // Dummy data (we'll connect a DB later)
-    { id: 1, name: "Cozy Bean", wifi: [2], outlets:[ 2], capacity: [3], foodBev:[3], tags: ['cozy-chairs', 'quiet', 'awesome-service'] },
-    { id: 2, name: "Java Haven", wifi: [3], outlets: [4], capacity: [4], foodBev:[4], tags:['focused-mode-on', 'bustling', 'industrial']},
+
+//make dummy data for cafes 
+const cafes = [
+    { id: 1, name: "Cafe Latte", latitude: 43.7, longitude: -79.4, tags: {}, wifi: [], outlets: [], capacity: [], foodBev: [] },
+    { id: 2, name: "Java Junction", latitude: 43.6, longitude: -79.3, tags: {}, wifi: [], outlets: [], capacity: [], foodBev: [] },
 ];
-
-
-
-
-// done cafeRoutes.get('/search',searchCafes); //get cafes based on search and filter criteria
-//done  cafeRoutes.get('/:id',getCafeDetails);//get cafe by specific id
-    // cafeRoutes.get('/featured', getFeaturedCafes); //get featured cafes 
-// done cafeRoutes.post('/:id/rate',addRatings); 
-// done cafeRoutes.post('/:id/tags',addTags);
-// cafeRoutes.get("/:id/ratings",getCafeRatings);
-// cafeRoutes.get("/:id/tags",getCafeTags);
-// cafeRoutes.get("/map",getMap); //map integration
 
 
 //search cafes - by location, name, amenities 
@@ -26,13 +16,13 @@ exports.searchCafes = (req,res) => {
     //search by name
     if (req.query.name) {
         const searchName = req.query.name.toLowerCase();
-        results = results.filter(cafe=> cafe.name.toLowerCase.includes(searchName));
+        results = results.filter(cafe=> cafe.name.toLowerCase().includes(searchName));
 
     }
     //search by location (lat + long + radius)
     if (req.query.latitude && req.query.longitude) {
         const userLat  = req.query.latitude;
-        const userLong = req.query.long;
+        const userLong = req.query.longitude;
         const radius = req.query.radius || 5000; //default wil be 5km
         results = cafes.filter(cafe =>{
             const distance = getDistance(userLat, userLong, cafe.latitude, cafe.longitude);
@@ -117,25 +107,26 @@ exports.addRatings = (req,res) => {
 }
 
 //POST tags 
-exports.addTags = (req,res) => {
+exports.addTags = (req, res) => {
+    const cafe = cafes.find(c => c.id === Number(req.params.id));
+    if (!cafe) return res.status(404).json({ message: "Cafe not found!" });
 
-
-    const cafe = cafes.find(c=> c.id ===Number(req.params.id));
-    if (!cafe) return res.status(404).json({message:"Cafe not found!"});
     const userTags = req.body.tags;
     if (!userTags || !Array.isArray(userTags)) {
-        return res.status(400).json({ message: "Tags should be provided as an array." });
+        return res.status(400).json({ message: "Tags should be an array." });
     }
-    //if valid tag, then add to cafe
-    userTags.forEach(tag => {
-        //only accept allowed tags 
-        if (cafeTags.includes(tag)){
-            cafe.tags.push(tag);
-        }
-    })
-    res.json({ message: "Tags added!", cafe });
 
-}
+    if (!cafe.tags) cafe.tags = {}; // Initialize tags as a hashmap
+
+    // Only allow valid tags
+    userTags.forEach(tag => {
+        if (cafeTags.includes(tag)) {
+            cafe.tags[tag] = (cafe.tags[tag] || 0) + 1; // Count occurrences
+        }
+    });
+
+    res.json({ message: "Tags added!", cafe });
+};
 
 exports.getCafeRatings = (req, res) => {
     // Find the cafe
@@ -155,3 +146,15 @@ exports.getCafeRatings = (req, res) => {
     });
 };
 
+
+exports.getCafeTags = (req, res) => {
+    const cafe = cafes.find(c => c.id === Number(req.params.id));
+    if (!cafe) return res.status(404).json({ message: "Cafe not found." });
+
+    // Ensure tags exist and return them as an array sorted by popularity
+    const tags = cafe.tags ? Object.entries(cafe.tags)
+        .sort((a, b) => b[1] - a[1]) // Sort by count
+        .map(([tag, count]) => ({ tag, count })) : [];
+
+    res.json(tags);
+};

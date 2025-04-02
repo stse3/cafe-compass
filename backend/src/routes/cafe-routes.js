@@ -11,6 +11,6 @@ cafeRoutes.post('/:id/rate',addRatings);
 cafeRoutes.post('/:id/tags',addTags);
 cafeRoutes.get("/:id/ratings",getCafeRatings);
 cafeRoutes.get("/:id/tags",getCafeTags);
-cafeRoutes.get("/map",getMap); //map integration
+//cafeRoutes.get("/map",getMap); //map integration
 
 module.exports = cafeRoutes;
