@@ -13,4 +13,9 @@ function getDistance(lat1, lon1, lat2, lon2) {
     return R * c; // Distance in meters
 }
 
-export default {getDistance}
+function calculateAverage(arr) {
+    if (arr.length === 0) return 0;
+    const total = arr.reduce((sum, value) => sum + value, 0);
+    return total / arr.length;
+}
+export default {getDistance, calculateAverage}
