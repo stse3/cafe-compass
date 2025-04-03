@@ -18,4 +18,4 @@ function calculateAverage(arr) {
     const total = arr.reduce((sum, value) => sum + value, 0);
     return total / arr.length;
 }
-export default {getDistance, calculateAverage}
+module.exports ={getDistance, calculateAverage}

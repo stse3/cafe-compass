@@ -1,7 +1,7 @@
+
 const express= require('express');
 const cors = require('cors');
 
-const {server,firebase} = require('./src/config');
 
 //intialize the express app
 const app = express();
