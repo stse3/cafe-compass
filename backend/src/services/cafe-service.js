@@ -20,9 +20,25 @@ const findCafesNearLocation = async (lat,lng,radius,limit) => {
   }
 }
 
+const findCafeDetails = async (cafeId) => {
+  try {
+    //checks if its a google places cafe or a local cafe ID 
+    checkGooglePlaceId = cafeId.startsWith('ChIJ');
+    const query = checkGooglePlaceId ? `SELECT * FROM cafes WHERE google_place_id = $1` : `SELECT * FROM cafes WHERE id = $1`;
+    const reuslt = await pool.query (query, [cafeId]);
+    if (result.rows.length === 0) {
+      throw new Error('Cafe not found');
+    }
+
+  }catch (error){
+    console.error('Database error finding cafe details: ', error);
+    throw error;
+  }
+}
 
 const cafeService = {
-  findCafesNearLocation
+  findCafesNearLocation,
+  findCafeDetails
 
 };
 
