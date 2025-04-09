@@ -37,8 +37,8 @@ const transformPlaceData = (placeDetails) => {
   
       // If the cafe doesn't exist, perform the insert
       const insertQuery = `
-        INSERT INTO cafes (name, address, latitude, longitude, description, google_place_id)
-        VALUES ($1, $2, $3, $4, $5, $6)
+        INSERT INTO cafes (name, address, latitude, longitude, google_place_id)
+        VALUES ($1, $2, $3, $4, $5)
         RETURNING id;
       `;
       
@@ -47,7 +47,6 @@ const transformPlaceData = (placeDetails) => {
         cafeData.address,
         cafeData.latitude,
         cafeData.longitude,
-        cafeData.description,
         cafeData.google_place_id
       ];
       

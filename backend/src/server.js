@@ -1,12 +1,12 @@
 // Required External Modules
-require('dotenv').config({ path: '../.env' });
+require('dotenv').config({ path: require('path').join(__dirname, '../.env') });
 const express = require('express');
 const cors = require('cors');
-const morgan = require('morgan');  // for logging
+const path = require('path');
 
 // Import Routes
-const cafeRoutes = require('./routes/cafeRouter.js');
-const userRoutes = require('./routes/userRouter.js');  // when you add user functionality
+const cafeRoutes = require( './routes/cafe-router.js');
+// const userRoutes = require(path.join(__dirname, './routes/userRouter.js'));  // when you add user functionality
 
 // App Variables
 const app = express();
@@ -16,11 +16,6 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());  // Enable CORS for all routes
 app.use(express.json());  // Parse JSON request bodies
 app.use(express.urlencoded({ extended: true }));  // Parse URL-encoded bodies
-
-// Logging
-if (process.env.NODE_ENV !== 'production') {
-  app.use(morgan('dev'));  // Log requests in development
-}
 
 // Routes
 app.use('/api/cafes', cafeRoutes);  // Mount cafe routes
@@ -43,16 +38,7 @@ app.use((err, req, res, next) => {
     error: process.env.NODE_ENV === 'development' ? err.message : undefined 
   });
 });
-const testConnection = async () => {
-  try {
-    const result = await pool.query('SELECT NOW()');
-    console.log('Database connection successful:', result.rows[0]);
-  } catch (error) {
-    console.error('Database connection failed:', error);
-  }
-};
 
-testConnection();
 // Server Activation
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

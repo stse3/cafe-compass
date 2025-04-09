@@ -1,5 +1,5 @@
 const {Pool} = require ('pg');
-require('dotenv').config({ path: '../../.env' });
+require('dotenv').config({ path: require('path').resolve(__dirname, '../../.env') });
 console.log('DB USER:', process.env.DB_USER);
 
 //create a connection pool
