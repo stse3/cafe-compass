@@ -1,1 +1,0 @@
-Building my Cafe-Compass App!
