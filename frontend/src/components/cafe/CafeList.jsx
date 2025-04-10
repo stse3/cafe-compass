@@ -1,0 +1,16 @@
+import CafeCard from "./CafeCard";
+
+export default function cafeList({cafes}) {
+    return (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+
+            {cafes.map((cafe)=> (
+                <CafeCard
+                    key={cafe.id} //unique key for each cafe card
+                    name={cafe.name} //name of the cafe
+                    address={cafe.address} //address of the cafe
+                />
+            ))}
+        </div>
+    )
+}
