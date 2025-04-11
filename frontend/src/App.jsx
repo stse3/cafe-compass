@@ -1,10 +1,12 @@
 import React from 'react';
-import SearchBar from './components/common/SearchBar.jsx';
+import CafeListingPage from './pages/CafeListingPage.jsx';
+
 
 export default function App (){
     return (
         
-    <></>
+    <>
+    <CafeListingPage></CafeListingPage></>
     
 
     )
