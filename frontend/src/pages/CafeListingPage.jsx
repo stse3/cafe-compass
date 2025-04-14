@@ -15,6 +15,8 @@ export default function CafeListingPage () {
     const [searchLoading, setSearchLoading] = useState(false);
     const [cafes, setCafes] = useState([])
 
+
+
     const fetchNearbyCafes = async () => {
         setIsLoading(true);
         setError(false);
@@ -49,13 +51,13 @@ export default function CafeListingPage () {
             }
         }
     }
-    const handleSearch = () => {
+    const handleFetch = (query) => {
         console.log('handleSearch called with mode:', mode, 'and query:', searchQuery);
         if (mode ==="nearby") {
             fetchNearbyCafes();
 
         }else if (mode ==="search"){
-            fetchSearchedCafes(searchQuery);
+            fetchSearchedCafes(query);
         }
     }
     
@@ -64,9 +66,9 @@ export default function CafeListingPage () {
 
         {/* Render SearchBar  */}
         <div>
-                    <SearchBar placeholder="Searching cafe results by name..."
-                        searchInput = {searchQuery}
-                        setSearchInput={setSearchQuery}
+                    <SearchBar placeholder="Searching cafe results..."
+                        handleFetch={handleFetch}  
+                        
                     />
             
             </div>
