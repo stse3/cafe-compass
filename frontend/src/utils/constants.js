@@ -1,0 +1,1 @@
+//app-wide constants like API endpoints and status codes 

@@ -4,7 +4,7 @@ import {Search} from 'lucide-react'
 //Keeps UI seperate from search logic, uses props for flexibility 
 //utility  function - for debouncing search input --> to avoid calling search function on each keystroke
 
-export default function SearchBar ({placeholder ,handleFetch}){
+export default function SearchBar ({placeholder ,onSearch}){
      const [input,setInput] = useState('');
      const [debouncedInput, setDebouncedInput] = useState('')
  
@@ -24,7 +24,7 @@ export default function SearchBar ({placeholder ,handleFetch}){
     //Trigger parent fetch, when debounce input changes 
     useEffect(()=>
         {if (debouncedInput){
-            handleFetch(debouncedInput);
+            onSearch(debouncedInput);
         }
         },[debouncedInput])
 
