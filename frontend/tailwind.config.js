@@ -6,6 +6,8 @@ export default {
       fontFamily: {
         sans: ['Albert Sans', 'sans-serif'],
         serif: ['Playfair Display', 'serif'],
+        pixel: ['Pixelify Sans', 'sans']
+        
       },
       colors: {
         gold: '#F0B35C',
@@ -13,10 +15,19 @@ export default {
         copper: '#C87741',
         brown: '#5A3E2B',
         charcoal: '#2E2E2E',
-        lightGreen: '#8FD694',
+        lightGreen: '#DDEFC8',
         darkPink: '#D85A7F',
+        vanilla: '#FFFDFA',
+        darkGreen: '#4F6F28'
       },
+      textShadow: {
+        'default': '0 4px 4px rgba(0,0,0,0.25)',
+        'md': '0 4px 8px rgba(0,0,0,0.25)',
+        'lg': '0 8px 16px rgba(0,0,0,0.25)',
+      }
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss-textshadow')
+  ],
 };

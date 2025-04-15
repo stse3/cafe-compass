@@ -4,8 +4,10 @@ import SearchBar from '../components/common/SearchBar.jsx';
 import useLocation from '../hooks/useLocation.js';
 import {cafeService} from '../services/cafe-service.js'; //import cafe service for API calls
 //getNearby, searchCafes
+import Header from '../components/layout/Header.jsx';
+import Footer from '../components/layout/Footer.jsx';
 
-export default function CafeListingPage () {
+export default function CafeListing () {
     const [mode, setMode] = useState('nearby');
     const [error, setError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -40,7 +42,6 @@ export default function CafeListingPage () {
 
     }
     const fetchSearchedCafes = async (query) => {
-        console.log("ITS HAPPENING")
         setIsLoading(true);
         setError(false);
         //assume its always searching by name for now
@@ -48,7 +49,6 @@ export default function CafeListingPage () {
         if (params){
             try {
                 const response = await cafeService.searchCafes(params);
-                console.log("REPSONSE", response)
                 setCafes(response);
                 
             }catch (error) {
@@ -72,16 +72,15 @@ export default function CafeListingPage () {
     };
     
     //RENDERING THE UI
-    return (<>
-
+    return (<div>
+    
         {/* Render SearchBar  */}
         <div>
                     <SearchBar placeholder="Searching cafe results..."
                         onSearch={handleSearch}  
                         
                     />
-            
-            </div>
+        </div>
             {/* Render cafes list when loading is complete and no error */}
             {!isLoading && !error && cafes.length > 0 && (
                 <CafeList cafes={cafes} />
@@ -93,6 +92,6 @@ export default function CafeListingPage () {
                 <p>No cafes found.</p>
             )}
                     
-    </>)
+    </div>)
 
 }

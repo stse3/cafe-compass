@@ -30,16 +30,19 @@ export default function SearchBar ({placeholder ,onSearch}){
 
 
     return ( 
-        <div >
+        <div className="flex flex-row rounded-3xl px-6 py-3 border border-charcoal w-96 gap-5 px-6 py-3 m-5">
+            <Search strokeWidth={2} size={20}></Search>
             <input
                 type="text"
                 value={input}
                 onChange={(e)=> handleChange(e.target.value)}
                 placeholder={placeholder}
-                className="font-sans bg-gray-100 rounded-xl px-6 py-3"
+                className="outline-none"
+                
                 
             
             ></input>
+
             
         </div>
     )
