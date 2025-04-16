@@ -30,7 +30,7 @@ export default function SearchBar ({placeholder ,onSearch}){
 
 
     return ( 
-        <div className="flex flex-row rounded-3xl px-6 py-3 border border-charcoal w-96 gap-5 px-6 py-3 m-5">
+        <div className="bg-white flex flex-row rounded-3xl py-1.5 border border-charcoal w-96 gap-5 px-6 m-5 items-center">
             <Search strokeWidth={2} size={20}></Search>
             <input
                 type="text"

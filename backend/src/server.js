@@ -3,10 +3,16 @@ require('dotenv').config({ path: require('path').join(__dirname, '../.env') });
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const session = require("express-session");
+const passport = require("passport");
+
 
 // Import Routes
 const cafeRoutes = require( './routes/cafe-router.js');
-// const userRoutes = require(path.join(__dirname, './routes/userRouter.js'));  // when you add user functionality
+const authRoutes = require('./routes/auth-router.js');
+
+// Import Passport configuration
+require('./config/passport.config');  // <-- This line is the change!
 
 // App Variables
 const app = express();
@@ -17,9 +23,26 @@ app.use(cors());  // Enable CORS for all routes
 app.use(express.json());  // Parse JSON request bodies
 app.use(express.urlencoded({ extended: true }));  // Parse URL-encoded bodies
 
+//Middleware - AUTH
+//enable whole app to handle login sessions, let passport store user info betwen requests
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure:false, //set to true if using HTTPS
+    httpOnly: true,
+    maxAge: 1000*60*60*24 //1 day
+  }
+}))
+
+//Middleware - PASSPORT intialization
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Routes
 app.use('/api/cafes', cafeRoutes);  // Mount cafe routes
-// app.use('/api/users', userRoutes);  // Will add later
+app.use('/auth', authRoutes); //Mount authentication routes
 
 // Root route
 app.get('/', (req, res) => {

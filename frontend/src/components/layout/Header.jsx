@@ -1,9 +1,11 @@
 import {Menu, X, ChevronDown} from 'lucide-react';
 import {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import Button from "../common/Button";
 export default function Header () {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const navigate = useNavigate();
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -12,28 +14,31 @@ export default function Header () {
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
     }
-
+    const handleLogin = () =>{
+        navigate('/login');
+    }
 
     return (
-        <header className="bg-white shadow-md mb-5 flex items-center justify-between px-6 py-4">
+        <header className=" m-5 rounded rounded-xl shadow-md mb-5 flex items-center justify-between px-6 py-4">
 
                 {/* logo name */}
-                <a href="/" className="font-pixel text-3xl">Cafe Compass</a>
+                <a href="/" className="text-shadow-md font-pixel text-2xl">Cafe Compass</a>
 
-                    <div className="flex flex-row items-center justify-center gap-20 text text-md">
-                        <a href="/">home</a>
+                    <div className="font-sans flex flex-row items-center justify-center gap-20 text text-md">
+                        <a href="/">Home</a>
                         {/* search  */}
-                        <a href="/search">search</a>
+                        <a href="/search">Search Cafes</a>
                         
                         {/* your notebook */} 
-                        <a href="#">cafe diary</a>
+                        <a href="#">Cafe Diary</a>
 
                         {/* sign in - turn this into a button later */}
                     </div>
                     <div >
                         <Button
+                            type="primary"
+                            onClick={handleLogin}
                             label="Sign Up"
-                            
                         ></Button>
                     </div>
 

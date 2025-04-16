@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = `${import.meta.env.VITE_BACKEND_URL}/api/cafes`;
 
 export const cafeService = {
     getNearby: async (lat, lng, radius) => {
         try {
-            const response = await axios.get(`${API_URL}/cafes/nearby`, {
+            const response = await axios.get(`${API_URL}/nearby`, {
                 params: { lat, lng, radius }
             });
             return response.data;
@@ -27,7 +27,7 @@ export const cafeService = {
 
     searchCafes: async (filters) => {
         try {
-            const response = await axios.get(`${API_URL}/cafes/search`, {
+            const response = await axios.get(`${API_URL}/search`, {
                 params: filters
             });
             return response.data;
@@ -46,7 +46,7 @@ export const cafeService = {
     getDetails: async (cafeId) => {
         try {
             // Fixed the string interpolation syntax here (was using {API_URL} instead of ${API_URL})
-            const response = await axios.get(`${API_URL}/cafes/${cafeId}`);
+            const response = await axios.get(`${API_URL}/${cafeId}`);
             return response.data;
         } catch (error) {
             console.error('Error fetching cafe details:', error);
