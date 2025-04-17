@@ -19,10 +19,10 @@ export default function Header () {
     }
 
     return (
-        <header className=" m-5 rounded rounded-xl shadow-md mb-5 flex items-center justify-between px-6 py-4">
+        <header className=" shadow-md mb-5 flex items-center justify-between px-6 py-4">
 
                 {/* logo name */}
-                <a href="/" className="text-shadow-md font-pixel text-2xl">Cafe Compass</a>
+                <a href="/" className="text-shadow-md font-pixel text-2xl">CAFE COMPASS</a>
 
                     <div className="font-sans flex flex-row items-center justify-center gap-20 text text-md">
                         <a href="/">Home</a>
@@ -38,7 +38,7 @@ export default function Header () {
                         <Button
                             type="primary"
                             onClick={handleLogin}
-                            label="Sign Up"
+                            label="Log In"
                         ></Button>
                     </div>
 

@@ -13,9 +13,10 @@ export default function App (){
            
                 <Routes>
                     {/* login page */}
-                    <Route path="/login" element={<Login/>}></Route>
+                    
                     <Route element={<Layout/>}>
                         <Route path="/" element={<Home/>}></Route>
+                        <Route path="/login" element={<Login/>}></Route>
                         <Route path="/search" element={<CafeListing/>}></Route>
                         <Route path="/cafe/:id" element={<CafeDetail/>}></Route>
                     </Route>

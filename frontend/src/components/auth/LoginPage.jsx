@@ -2,6 +2,7 @@
 import {useState} from 'react';
 import Button from '../common/Button';
 import googleIcon from '../../assets/google.png'
+import croissantImage from '../../assets/croissant.png'
 
 export default function Login(){
     //check if the user is already logged in --> checks if there's a session or a google token
@@ -10,20 +11,23 @@ export default function Login(){
     }
 
     return (
-        <div className="flex flex-col justify-center items-center min-h-screen">
-            <div className="border border-charcoal shadow shadow-xl rounded rounded-xl px-32 py-32">
-                    <div className="flex flex-col justify- items-center">
-                        <h1 className="font-semibold text-3xl">Log in</h1>
-                        <div className="flex flex-row justify-center items-center bg-charcoal rounded rounded-3xl px-2 py-1 ">
-                        <Button
-                        
-                            onClick={handleGoogleLogin}
-                            label={<div className="flex flex-row gap-1 justify-center items-center "><img className="w-6 h-6 m-0" src={googleIcon} alt="Google Icon"/><p className="text-md">Login with Google</p></div>}
-                        />
-                        </div>
-                        
+        <div className="flex flex-col pt-32 items-center min-h-screen">
+                <div className="flex flex-col justify-center items-center gap-12 ">
+                    <div >
+                        <h1 className="font-pixel text-4xl  text-shadow-sm">What cafe will you discover today?</h1>
                     </div>
+                    <div className="bg-white rounded rounded-3xl border border-charcoal shadow">
+                        <img src={croissantImage} className="h-96 w-96"></img>
+                    </div>
+                       
+                        <Button
+                            onClick={handleGoogleLogin}
+                            type="loginGoogle"
+                            label="Log in with Google"
+                        />
             </div>
+
+                    
         </div>
 
     )
