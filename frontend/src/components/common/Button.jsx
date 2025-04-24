@@ -3,9 +3,10 @@ import googleIcon from '../../assets/google.png'
 export default function Button({ onClick, label, children = null, type = 'primary' }) {
     const baseStyle = 'font-sans text-md rounded-3xl focus:outline-none'
     const typeStyles = {
-        primary: 'px-4 py-1.5 text-md bg-charcoal text-white hover:bg-charcoal hover:shadow-lg hover:scale-105 transition-all duration-300',
-        secondary: 'px-3 text-sm py-1.5 bg-lightGreen text-darkGreen hover:bg-lightGreen hover:shadow-sm duration-300',
-        loginGoogle: 'bg-white text-charcoal text-md px-6 py-3 rounded-3xl border border-charcoal shadow shadow-md hover:scale-105 hover:shadow-xl duration-300 transition-all'
+        primary: 'px-4 py-1 text-sm bg-charcoal text-white hover:bg-charcoal hover:shadow-lg hover:scale-105 transition-all duration-300',
+        secondary: 'px-3 text-sm py-1 bg-lightGreen text-darkGreen hover:bg-lightGreen hover:shadow-sm duration-300',
+        loginGoogle: 'bg-white text-charcoal text-md px-6 py-3 rounded-3xl border border-charcoal shadow shadow-md hover:scale-105 hover:shadow-xl duration-300 transition-all',
+        logOut: 'bg-white text-charcoal text-sm px-4 py-1 border border-charcoal shadow-sm hover:shadow-md hover:scale-105 duration-300 transition-all'
     };
 
     // If type is not recognized, default to primary

@@ -14,7 +14,6 @@ const transformPlaceData = (placeDetails) => {
       address: placeDetails.formattedAddress || '',
       latitude: placeDetails.location?.latitude || 0,
       longitude: placeDetails.location?.longitude || 0,
-      description: '', // Empty for now
       google_place_id: placeDetails.id || null
     };
   };

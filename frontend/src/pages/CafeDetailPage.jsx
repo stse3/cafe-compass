@@ -47,7 +47,7 @@ export default function CafeDetail(){
             >
                 <div className="flex flex-row gap-2"><CircleChevronLeft/> <p>back to search</p></div>
             </button>
-            <div className="border border-charcoal rounded rounded-3xl h-auto w-124 p-32 flex flex-col justify-start">
+            <div className="rounded rounded-3xl h-auto w-124 p-32 flex flex-col justify-start">
             <h1 className="text-3xl font-bold">{cafeDetails.name}</h1>
             <p className="mt-2 text-gray-600">{cafeDetails.address}</p>
 

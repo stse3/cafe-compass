@@ -1,5 +1,6 @@
 const axios = require('axios');
-const {googleConfig} = require("../config/google.config")
+const {googleConfig} = require("../config/google.config");
+
 const getNearbyCafes = async (
     latitude,
     longitude,
@@ -72,8 +73,7 @@ const getPlaceDetails = async (placeId) => {
     'X-Goog-Api-Key': googleConfig.apiKey,
     'X-Goog-FieldMask': 'id,displayName,formattedAddress,location,rating,userRatingCount,priceLevel,types,businessStatus,photos,openingHours,websiteUri,internationalPhoneNumber,reviews'
   };
-  console.log(googleConfig.apiKey)
-  
+
   try {
     const response = await axios.get(apiUrl, { 
       headers,

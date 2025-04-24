@@ -10,6 +10,8 @@ const passport = require("passport");
 // Import Routes
 const cafeRoutes = require( './routes/cafe-router.js');
 const authRoutes = require('./routes/auth-router.js');
+const userRoutes = require('./routes/user-router.js');
+const notebookRoutes = require('./routes/notebook-router.js');
 
 // Import Passport configuration
 require('./config/passport.config');  // <-- This line is the change!
@@ -19,7 +21,12 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
-app.use(cors());  // Enable CORS for all routes
+app.use(cors({
+  origin: process.env.FRONTEND_URL,
+  credentials: true,
+}))
+
+
 app.use(express.json());  // Parse JSON request bodies
 app.use(express.urlencoded({ extended: true }));  // Parse URL-encoded bodies
 
@@ -42,8 +49,9 @@ app.use(passport.session());
 
 // Routes
 app.use('/api/cafes', cafeRoutes);  // Mount cafe routes
-app.use('/auth', authRoutes); //Mount authentication routes
-
+app.use('/api/auth', authRoutes); //Mount authentication routes
+app.use('/api/user',userRoutes);//mount user routes 
+app.use('/api/notebook',notebookRoutes); //mounting notebook routes 
 // Root route
 app.get('/', (req, res) => {
   res.json({ message: 'Welcome to Cafe Compass API' });
