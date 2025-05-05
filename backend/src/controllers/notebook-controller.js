@@ -1,8 +1,9 @@
 const notebookService= require ('../services/notebook-service');
 
 const saveCafeToNotebook = async (req, res) =>{
-    const {cafeId, note} = req.query;
-    
+    const {cafeId, title, note, media, is_journal_entry} = req.body;
+    const visited_at = req.body.visited_ad || new Date(); // fallback to current date
+
     if (!req.isAuthenticated()) {
         return res.status(401).json({message: 'User is not logged in'});
     }
@@ -11,14 +12,14 @@ const saveCafeToNotebook = async (req, res) =>{
     }
     try {
         const userId = req.user.id;
-        const savedCafe = await notebookService.saveCafeToNotebook(userId, cafeId, note || '') //handle empty note
-        return res.status(201).json({
+        const savedCafe = await notebookService.saveCafeToNotebook(userId, cafeId, title||'', note || '', media, visited_at, is_journal_entry) //handle empty note
+        return res.status(200).json({
             message: 'Cafe saved to notebook succesfully!',
             savedCafe
 
         });
     }catch (error){
-        console.error("Error saving cafe to notebook")
+        console.error("Error saving cafe to notebook: ", error)
         return res.status(500).json({ message: 'Failed to save cafe to notebook' });
     }
     
@@ -35,12 +36,12 @@ const removeSavedCafe = async (req,res) => {
     try {
         const userId = req.user.id;
         const removedCafe = await notebookService.removeSavedCafe(userId, cafeId) //handle empty note
-        return res.status(201).json({
+        return res.status(200).json({
             message: 'Cafe deleted from notebook succesfully!',
             removedCafe
         });
     }catch (error){
-        console.error("Error saving cafe to notebook")
+        console.error("Error saving cafe to notebook: ", error)
         return res.status(500).json({ message: 'Failed to save cafe to notebook' });
     }
     
@@ -49,7 +50,7 @@ const removeSavedCafe = async (req,res) => {
 
 const updateNotebookNote = async (req,res) => {
     const {cafeId} = req.params;
-    const {note} = req.body;
+    const {title, note, media, visited_at, is_journal_entry} = req.body;
     if (!req.isAuthenticated()) {
         return res.status(401).json({message: 'User is not logged in'});
     }
@@ -58,9 +59,9 @@ const updateNotebookNote = async (req,res) => {
     }
     try{
         const userId = req.user.id;
-        const updatedCafe = await notebookService.updateNotebookNote(userId, cafeId, note);
+        const updatedCafe = await notebookService.updateNotebookNote(userId, cafeId, title, note, media||'', visited_at, is_journal_entry);
         return res.status(201).json({
-            message: 'Note succesfully updated to cafe notebook',
+            message: 'Note successfully updated to cafe notebook',
             updatedCafe
         })
     }catch (error){
@@ -82,7 +83,7 @@ const getUserNotebook = async (req,res) => {
             notebook
         });
     }catch (error){
-        console.error("Error fetching saved cafe and notes");
+        console.error("Error fetching saved cafe and notes: ", error);
         return res.status(500).json({message: 'Failed to fetch note from notebook'});
     }
 }
@@ -104,7 +105,6 @@ const getSavedCafe = async (req, res) => {
         if (!savedCafe) {
             return res.status(404).json({ message: 'Cafe not found in notebook' });
         }
-        
         return res.status(200).json({
             message: 'Saved cafe retrieved successfully',
             savedCafe
@@ -114,6 +114,7 @@ const getSavedCafe = async (req, res) => {
         return res.status(500).json({message: 'Failed to fetch saved cafe'});
     }
 }
+
 
 
 const notebookController = {

@@ -8,7 +8,7 @@ export default {
         serif: ['Playfair Display', 'serif'],
         pixel: ['Pixelify Sans', 'sans']
         
-      },
+      },a
       colors: {
         gold: '#F0B35C',
         cream: '#FFF1ED',

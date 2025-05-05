@@ -1,8 +1,8 @@
 const pool = require('../config/db.config.js')
 
-const saveCafeToNotebook = async (userID, cafeID,title,note, media, visit_date, is_journal_entry) => {
-    const query = 'INSERT INTO notebook (user_id,cafe_id, title, note, media, visit_date, is_journal_entry) VALUES ($1,$2, $3, $4, $5, $6, $7)RETURNING * '
-    const values = [userID, cafeID,title, note, media, visit_date, is_journal_entry];
+const saveCafeToNotebook = async (userID, cafeID,title,note, media, visited_at, is_journal_entry) => {
+    const query = 'INSERT INTO notebook (user_id,cafe_id, title, note, media, visited_at, is_journal_entry) VALUES ($1,$2, $3, $4, $5, $6, $7)RETURNING * '
+    const values = [userID, cafeID,title, note, media, visited_at, is_journal_entry];
     try {
         const result = await pool.query(query,values);
         return result.rows[0];
@@ -23,10 +23,16 @@ const removeSavedCafe = async (userID, cafeID) => {
         throw error;
     }
 }
+ 
+const updateNotebookNote = async (userID, cafeID, title, note,media, visited_at, is_journal_entry)=> {
+    const query = `
+    UPDATE notebook
+    SET title=$1, note=$2, media=$3, visited_at=$4, is_journal_entry=$5, updated_at = NOW()
+    WHERE user_id=$6 AND cafe_id=$7
+    RETURNING *
+`;
 
-const updateNotebookNote = async (userID, cafeID,title, note,media, visit_date, is_journal_entry)=> {
-    const query = 'UPDATE notebook SET title=$1, note=$2, media=$3, visit_date=$4, is_journal_entry=$5 WHERE user_id=$6 and cafe_id=$7 RETURNING *';
-    const values = [title, note, media, visit_date, is_journal_entry, userID, cafeID];
+    const values = [title, note, media, visited_at, is_journal_entry, userID, cafeID];
     try {
         const result = await pool.query(query,values);
         return result.rows[0];
@@ -37,7 +43,8 @@ const updateNotebookNote = async (userID, cafeID,title, note,media, visit_date, 
 }
 
 const getUserNotebook = async (userID) => {
-    const query = `SELECT * FROM notebook WHERE user_id = $1`;
+    const query = 'SELECT user_id, cafe_id, title, note, media, visited_at, is_journal_entry, updated_at FROM notebook WHERE user_id = $1';
+    
     const values = [userID];
     try {
         const result = await pool.query(query, values);
@@ -61,7 +68,7 @@ const getSavedCafe = async (userID, cafeID) => {
 };
 
 
-notebookService = {
+const notebookService = {
     saveCafeToNotebook,
     removeSavedCafe,
     updateNotebookNote,
